@@ -9,7 +9,8 @@ export default function Editor({ initialCode = '// Введите код зде�
   const [code, setCode] = useState(initialCode)
   const [output, setOutput] = useState<string[]>([])
   const [error, setError] = useState<string | null>(null)
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  // В браузере setTimeout возвращает number, поэтому используем number | null
+  const timeoutRef = useRef<number | null>(null)
   const isRunningRef = useRef(false)
 
   // Обновляем код при изменении initialCode
@@ -199,7 +200,8 @@ export default function Editor({ initialCode = '// Введите код зде�
             fontFamily: "'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace",
             fontLigatures: true,
             cursorBlinking: 'smooth',
-            cursorSmoothCaretAnimation: true,
+            // В типах Monaco это строка: 'on' | 'off' | 'explicit'
+            cursorSmoothCaretAnimation: 'on',
             smoothScrolling: true,
             padding: { top: 16, bottom: 16 },
           }}
